@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soline - Account Checker & Validator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#10B981', // Nice green
+                        dark: '#0F172A',    // Premium black
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-dark text-white font-[Inter]">
+    <div class="min-h-screen flex flex-col">
+        <!-- Navbar -->
+        <nav class="border-b border-gray-800 bg-black/50 backdrop-blur-lg sticky top-0 z-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between h-16">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0 flex items-center">
+                            <span class="text-primary font-bold text-2xl">SOLINE</span>
+                        </div>
+                        <div class="hidden md:ml-10 md:flex md:space-x-8">
+                            <a href="#" class="text-white hover:text-primary px-3 py-2 text-sm font-medium">Home</a>
+                            <a href="#features" class="text-gray-300 hover:text-primary px-3 py-2 text-sm font-medium">Features</a>
+                            <a href="#pricing" class="text-gray-300 hover:text-primary px-3 py-2 text-sm font-medium">Pricing</a>
+                            <a href="#faq" class="text-gray-300 hover:text-primary px-3 py-2 text-sm font-medium">FAQ</a>
+                        </div>
+                    </div>
+                    <div class="flex items-center">
+                        <a href="#" class="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-primary/80 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                            Dashboard
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <div class="relative overflow-hidden bg-gradient-to-b from-gray-900 to-dark">
+            <div class="absolute w-full h-full opacity-20">
+                <!-- Custom matrix-like code pattern background -->
+                <div id="matrix-bg" class="absolute inset-0"></div>
+            </div>
+            <div class="relative max-w-7xl mx-auto py-24 px-4 sm:py-32 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <div class="flex items-center mb-6">
+                            <div class="h-1 w-16 bg-primary mr-4"></div>
+                            <span class="text-primary text-sm font-mono">v2.4.6</span>
+                        </div>
+                        <h1 class="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl relative">
+                            <span class="block text-white z-10 relative">SOLINE</span>
+                            <span class="block text-primary z-10 relative glitch-text" data-text="Account Checker">Account Checker</span>
+                            <div class="absolute w-32 h-32 bg-primary/10 -top-10 -left-10 rounded-full blur-xl"></div>
+                        </h1>
+                        <p class="mt-6 text-xl text-gray-300 max-w-3xl border-l-4 border-primary pl-4">
+                            Verify your email:pass combos across major streaming platforms. Check account validity and subscription details in seconds.
+                        </p>
+                        <div class="mt-10 flex gap-4 flex-wrap">
+                            <a href="#" class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-black bg-primary hover:bg-primary/80">
+                                <i class="fas fa-rocket mr-2"></i> Start Checking
+                            </a>
+                            <a href="#" class="inline-flex items-center justify-center px-5 py-3 border border-primary text-base font-medium rounded-md text-primary bg-transparent hover:bg-primary/10">
+                                <i class="fas fa-code mr-2"></i> API Docs
+                            </a>
+                            <div class="w-full md:w-auto mt-4 md:mt-0 text-gray-400 flex items-center text-sm">
+                                <i class="fas fa-shield-alt mr-2"></i> 1.2M+ Checks Last 24h
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hidden md:block">
+                        <div class="relative rounded-md shadow-2xl overflow-hidden border border-gray-800 transform rotate-1">
+                            <div class="bg-gray-900 p-4 text-white">
+                                <div class="flex items-center justify-between mb-2">
+                                    <div class="flex gap-2">
+                                        <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                                        <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                                        <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                                    </div>
+                                    <div class="text-xs font-mono text-gray-400 flex items-center">
+                                        <span class="h-2 w-2 rounded-full bg-green-500 mr-2"></span>
+                                        soline-checker.exe
+                                    </div>
+                                </div>
+                                <div class="space-y-2">
+                                    <div class="bg-gray-800 rounded p-3">
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-primary font-mono text-sm">> node soline-check.js --bulk</span>
+                                            <span class="animate-pulse text-primary text-xs">█</span>
+                                        </div>
+                                        <div class="mt-2 font-mono text-xs text-gray-400">
+                                            Loaded 245 combos from list.txt<br/>
+                                            Starting check with 5 threads...<br/>
+                                            Progress: 102/245 [=====........] 41.6%
+                                        </div>
+                                    </div>
+                                    <div class="bg-gray-800 rounded p-3">
+                                        <div class="font-mono text-xs">
+                                            <div class="grid grid-cols-3 gap-2">
+                                                <div class="text-gray-400">Netflix:</div>
+                                                <div class="text-green-400">Valid</div>
+                                                <div class="text-blue-400">Premium 4K</div>
+                                                <div class="text-gray-400">Spotify:</div>
+                                                <div class="text-green-400">Valid</div>
+                                                <div class="text-blue-400">Family Plan</div>
+                                                <div class="text-gray-400">Disney+:</div>
+                                                <div class="text-red-400">Invalid</div>
+                                                <div class="text-gray-500">-</div>
+                                            </div>
+                                        </div>
+                                        <div class="mt-2 text-xs text-gray-400 border-t border-gray-700 pt-2">
+                                            <span class="text-green-400">35</span> valid | <span class="text-red-400">67</span> invalid | <span class="text-yellow-400">0</span> rate limited
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Small floating badge -->
+                        <div class="absolute -bottom-2 right-10 bg-primary text-black text-xs font-bold px-2 py-1 rounded-sm transform rotate-3 shadow-lg">
+                            BETA TESTERS WANTED!
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Features Section -->
+        <section id="features" class="py-16 bg-gradient-to-b from-black to-dark">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-left">
+                    <h2 class="text-3xl font-bold text-white sm:text-4xl mb-2">
+                        <span class="inline-block bg-primary/10 px-4 py-1 -ml-4">Features</span>
+                    </h2>
+                    <div class="flex items-center mt-2 mb-6">
+                        <div class="h-0.5 w-24 bg-primary"></div>
+                        <span class="text-gray-400 text-sm ml-4">Last updated: 2025-04-24</span>
+                    </div>
+                    <p class="max-w-2xl text-xl text-gray-300">
+                        We built Soline because there wasn't a decent account checker around. 
+                        Here's what makes our tool different from the garbage alternatives.
+                    </p>
+                </div>
+
+                <div class="mt-12">
+                    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                        <!-- Feature 1 -->
+                        <div class="bg-gray-900/50 hover:bg-gray-900/80 transition-all duration-300 border border-gray-800 hover:border-primary/50 rounded-lg overflow-hidden group">
+                            <div class="p-6">
+                                <div class="flex items-center mb-4">
+                                    <div class="bg-primary/20 rounded-lg p-2 mr-4">
+                                        <i class="fas fa-layer-group text-primary text-xl"></i>
+                                    </div>
+                                    <h3 class="text-lg font-medium text-white">Multi-Service Checking</h3>
+                                </div>
+                                <p class="text-base text-gray-400">
+                                    One combo, multiple services checked. Works with email:pass for 40+ streaming platforms including Netflix, Spotify, HBO & Disney+.
+                                </p>
+                                <div class="mt-4 text-xs text-gray-500">
+                                    Supported formats: email:pass, user:pass
+                                </div>
+                            </div>
+                            <div class="px-6 py-2 bg-gray-800/50 text-right">
+                                <span class="text-xs text-primary">All plans</span>
+                            </div>
+                        </div>
+
+                        <!-- Feature 2 -->
+                        <div class="bg-gray-900/50 hover:bg-gray-900/80 transition-all duration-300 border border-gray-800 hover:border-primary/50 rounded-lg overflow-hidden group">
+                            <div class="p-6">
+                                <div class="flex items-center mb-4">
+                                    <div class="bg-primary/20 rounded-lg p-2 mr-4">
+                                        <i class="fas fa-bolt text-primary text-xl"></i>
+                                    </div>
+                                    <h3 class="text-lg font-medium text-white">Blazing Speed</h3>
+                                </div>
+                                <p class="text-base text-gray-400">
+                                    Our proxied multi-threaded engine processes 1000+ accounts per minute. No rate limits, no timeouts.
+                                </p>
+                                <div class="mt-4 text-xs text-gray-500">
+                                    Avg. 5000 checks/hr on Pro+
+                                </div>
+                            </div>
+                            <div class="px-6 py-2 bg-gray-800/50 text-right">
+                                <span class="text-xs text-primary">All plans</span>
+                            </div>
+                        </div>
+
+                        <!-- Feature 3 -->
+                        <div class="bg-gray-900/50 hover:bg-gray-900/80 transition-all duration-300 border border-gray-800 hover:border-primary/50 rounded-lg overflow-hidden group">
+                            <div class="p-6">
+                                <div class="flex items-center mb-4">
+                                    <div class="bg-primary/20 rounded-lg p-2 mr-4">
+                                        <i class="fas fa-chart-pie text-primary text-xl"></i>
+                                    </div>
+                                    <h3 class="text-lg font-medium text-white">Plan Detection</h3>
+                                </div>
+                                <p class="text-base text-gray-400">
+                                    We don't just check validity - we extract subscription type, renewal date & account info when available.
+                                </p>
+                                <div class="mt-4 text-xs text-gray-500">
+                                    Premium detection available in Pro+
+                                </div>
+                            </div>
+                            <div class="px-6 py-2 bg-gray-800/50 text-right">
+                                <span class="text-xs text-primary">Pro & Enterprise</span>
+                            </div>
+                        </div>
+
+                        <!-- Feature 4 -->
+                        <div class="bg-gray-900/50 hover:bg-gray-900/80 transition-all duration-300 border border-gray-800 hover:border-primary/50 rounded-lg overflow-hidden group">
+                            <div class="p-6">
+                                <div class="flex items-center mb-4">
+                                    <div class="bg-primary/20 rounded-lg p-2 mr-4">
+                                        <i class="fas fa-cloud-upload-alt text-primary text-xl"></i>
+                                    </div>
+                                    <h3 class="text-lg font-medium text-white">Bulk Checking</h3>
+                                </div>
+                                <p class="text-base text-gray-400">
+                                    Upload .txt lists with thousands of combos. Export results as CSV, JSON or TXT. Full checking history saved.
+                                </p>
+                                <div class="mt-4 text-xs text-gray-500">
+                                    Up to 10K lines per file
+                                </div>
+                            </div>
+                            <div class="px-6 py-2 bg-gray-800/50 text-right">
+                                <span class="text-xs text-primary">Pro & Enterprise</span>
+                            </div>
+                        </div>
+
+                        <!-- Feature 5 - Custom checker-->
+                        <div class="bg-gray-900/50 hover:bg-gray-900/80 transition-all duration-300 border border-gray-800 hover:border-primary/50 rounded-lg overflow-hidden group">
+                            <div class="p-6">
+                                <div class="flex items-center mb-4">
+                                    <div class="bg-primary/20 rounded-lg p-2 mr-4">
+                                        <i class="fas fa-wrench text-primary text-xl"></i>
+                                    </div>
+                                    <h3 class="text-lg font-medium text-white">Custom Checkers</h3>
+                                </div>
+                                <p class="text-base text-gray-400">
+                                    Need a specific service checked? Enterprise customers can request custom checkers for any site with login.
+                                </p>
+                                <div class="mt-4 text-xs text-gray-500">
+                                    72hr turnaround on custom requests
+                                </div>
+                            </div>
+                            <div class="px-6 py-2 bg-gray-800/50 text-right">
+                                <span class="text-xs text-primary">Enterprise only</span>
+                            </div>
+                        </div>
+
+                        <!-- Feature 6 -->
+                        <div class="bg-gray-900/50 hover:bg-gray-900/80 transition-all duration-300 border border-gray-800 hover:border-primary/50 rounded-lg overflow-hidden group">
+                            <div class="p-6">
+                                <div class="flex items-center mb-4">
+                                    <div class="bg-primary/20 rounded-lg p-2 mr-4">
+                                        <i class="fas fa-headset text-primary text-xl"></i>
+                                    </div>
+                                    <h3 class="text-lg font-medium text-white">Discord Support</h3>
+                                </div>
+                                <p class="text-base text-gray-400">
+                                    Join our Discord for 24/7 support. Bug reports, feature requests, and updates all handled through our server.
+                                </p>
+                                <div class="mt-4 text-xs text-gray-500">
+                                    <a href="#" class="text-primary hover:underline">discord.gg/soline</a> · 2,400+ members
+                                </div>
+                            </div>
+                            <div class="px-6 py-2 bg-gray-800/50 text-right">
+                                <span class="text-xs text-primary">All plans</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pricing Section -->
+        <section id="pricing" class="py-16 bg-dark">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <span class="inline-block px-3 py-1 text-sm font-semibold text-primary bg-primary/10 rounded-full mb-2">PRICING</span>
+                    <h2 class="text-3xl font-bold text-white sm:text-4xl">
+                        Simple, transparent pricing
+                    </h2>
+                    <p class="mt-3 text-xl text-gray-400">
+                        No contracts. No hidden fees. No bullshit. Cancel anytime.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 gap-5 md:grid-cols-3">
+                    <!-- Basic Plan -->
+                    <div class="relative flex flex-col bg-gray-900 rounded-lg overflow-hidden border border-gray-800 transition-all duration-300 hover:border-gray-700 hover:shadow-xl hover:shadow-primary/5">
+                        <!-- Badge -->
+                        <div class="absolute top-0 right-0">
+                            <div class="text-xs bg-gray-800 text-gray-400 px-3 py-1 uppercase tracking-wider">
+                                Starter
+                            </div>
+                        </div>
+                        
+                        <div class="p-6">
+                            <h3 class="text-lg font-semibold text-white mb-1">Basic</h3>
+                            <div class="mt-2 flex items-baseline">
+                                <span class="text-4xl font-bold tracking-tight text-white">$9.99</span>
+                                <span class="ml-1 text-sm font-medium text-gray-400">/month</span>
+                            </div>
+                            <p class="mt-3 text-gray-400 text-sm">
+                                Just getting started? This has what you need for basic account checking.
+                            </p>
+                        </div>
+                        
+                        <div class="flex-grow p-6 pt-0">
+                            <ul class="space-y-3 text-sm">
+                                <li class="flex">
+                                    <div class="mr-3 text-primary">
+                                        <i class="fas fa-check-circle"></i>
+                                    </div>
+                                    <span class="text-gray-300">5 services included</span>
+                                </li>
+                                <li class="flex">
+                                    <div class="mr-3 text-primary">
+                                        <i class="fas fa-check-circle"></i>
+                                    </div>
+                                    <span class="text-gray-300">500 account checks/day</span>
+                                </li>
+                                <li class="flex">
+                                    <div class="mr-3 text-primary">
+                                        <i class="fas fa-check-circle"></i>
+                                    </div>
+                                    <span class="text-gray-300">Basic plan detection</span>
+                                </li>
+                                <li class="flex">
+                                    <div class="mr-3 text-primary">
+                                        <i class="fas fa-check-circle"></i>
+                                    </div>
+                                    <span class="text-gray-300">Discord support</span>
+                                </li>
+                                <li class="flex text-gray-500">
+                                    <div class="mr-3">
+                                        <i class="fas fa-times-circle"></i>
+                                    </div>
+                                    <span>No bulk checking</span>
+                                </li>
+                                <li class="flex text-gray-500">
+                                    <div class="mr-3">
+                                        <i class="fas fa-times-circle"></i>
+                                    </div>
+                                    <span>No CSV/JSON exports</span>
+                                </li>
+                                <li class="flex text-gray-500">
+                                    <div class="mr-3">
+                                        <i class="fas fa-times-circle"></i>
+                                    </div>
+                                    <span>Limited to 2 threads</span>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="p-6 bg-gray-800/40">
+                            <a href="#" class="w-full flex items-center justify-center py-2.5 border border-primary text-base font-medium rounded text-primary bg-transparent hover:bg-primary/10">
+                                Get Basic
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Pro Plan (Featured) -->
+                    <div class="relative flex flex-col bg-gray-900 rounded-lg overflow-hidden border-2 border-primary transform scale-105 z-10 shadow-xl shadow-primary/20">
+                        <!-- Badge -->
+                        <div class="absolute -top-3 -right-3 transform rotate-12">
+                            <div class="bg-primary text-black text-xs px-6 py-1 font-semibold shadow-lg">
+                                BEST VALUE
+                            </div>
+                        </div>
+                        
+                        <div class="p-6">
+                            <h3 class="text-lg font-semibold text-white mb-1">Pro</h3>
+                            <div class="mt-2 flex items-baseline">
+                                <span class="text-4xl font-bold tracking-tight text-white">$24.99</span>
+                                <span class="ml-1 text-sm font-medium text-gray-400">/month</span>
+                            </div>
+                            <p class="mt-3 text-gray-300 text-sm">
+                                Our most popular plan. Everything you need for serious account checking.
+                            </p>
+                        </div>
+                        
+                        <div class="flex-grow p-6 pt-0">
+                            <ul class="space-y-3 text-sm">
+                                <li class="flex">
+                                    <div class="mr-3 text-primary">
+                                        <i class="fas fa-check-circle"></i>
+                                    </div>
+                                    <span class="text-gray-300">20 services included</span>
+                                </li>
+                                <li class="flex">
+                                    <div class="mr-3 text-primary">
+                                        <i class="fas fa-check-circle"></i>
+                                    </div>
+                                    <span class="text-gray-300">2,500 account checks/day</span>
+                                </li>
+                                <li class="flex">
+                                    <div class="mr-3 text-primary">
+                                        <i class="fas fa-check-circle"></i>
+                                    </div>
+                                    <span class="text-gray-300">Advanced plan detection</span>
+                                </li>
+                                <li class="flex">
+                                    <div class="mr-3 text-primary">
+                                        <i class="fas fa-check-circle"></i>
+                                    </div>
+                                    <span class="text-gray-300">Priority Discord support</span>
+                                </li>
+                                <li class="flex">
+                                    <div class="mr-3 text-primary">
+                                        <i class="fas fa-check-circle"></i>
+                                    </div>
+                                    <span class="text-gray-300">Bulk checking (5,000 limit)</span>
+                                </li>
+                                <li class="flex">
+                                    <div class="mr-3 text-primary">
+                                        <i class="fas fa-check-circle"></i>
+                                    </div>
+                                    <span class="text-gray-300">CSV/JSON exports</span>
+                                </li>
+                                <li class="flex">
+                                    <div class="mr-3 text-primary">
+                                        <i class="fas fa-check-circle"></i>
+                                    </div>
+                                    <span class="text-gray-300">Up to 8 threads</span>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="p-6 bg-primary/20">
+                            <a href="#" class="w-full flex items-center justify-center py-2.5 border border-transparent text-base font-medium rounded text-black bg-primary hover:bg-primary/90">
+                                Get Pro
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Enterprise Plan -->
+                    <div class="relative flex flex-col bg-gray-900 rounded-lg overflow-hidden border border-gray-800 transition-all duration-300 hover:border-gray-700 hover:shadow-xl hover:shadow-primary/5">
+                        <!-- Badge -->
+                        <div class="absolute top-0 right-0">
+                            <div class="text-xs bg-gray-800 text-gray-400 px-3 py-1 uppercase tracking-wider">
+                                Unlimited
+                            </div>
+                        </div>
+                        
+                        <div class="p-6">
+                            <h3 class="text-lg font-semibold text-white mb-1">Enterprise</h3>
+                            <div class="mt-2 flex items-baseline">
+                                <span class="text-4xl font-bold tracking-tight text-white">$99.99</span>
+                                <span class="ml-1 text-sm font-medium text-gray-400">/month</span>
+                            </div>
+                            <p class="mt-3 text-gray-400 text-sm">
+                                For power users who need it all. Unlimited everything.
+                            </p>
+                        </div>
+                        
+                        <div class="flex-grow p-6 pt-0">
+                            <ul class="space-y-3 text-sm">
+                                <li class="flex">
+                                    <div class="mr-3 text-primary">
+                                        <i class="fas fa-check-circle"></i>
+                                    </div>
+                                    <span class="text-gray-300">All services included (40+)</span>
+                                </li>
+                                <li class="flex">
+                                    <div class="mr-3 text-primary">
+                                        <i class="fas fa-check-circle"></i>
+                                    </div>
+                                    <span class="text-gray-300">Unlimited account checks</span>
+                                </li>
+                                <li class="flex">
+                                    <div class="mr-3 text-primary">
+                                        <i class="fas fa-check-circle"></i>
+                                    </div>
+                                    <span class="text-gray-300">Premium plan detection</span>
+                                </li>
+                                <li class="flex">
+                                    <div class="mr-3 text-primary">
+                                        <i class="fas fa-check-circle"></i>
+                                    </div>
+                                    <span class="text-gray-300">24/7 direct Discord support</span>
+                                </li>
+                                <li class="flex">
+                                    <div class="mr-3 text-primary">
+                                        <i class="fas fa-check-circle"></i>
+                                    </div>
+                                    <span class="text-gray-300">Unlimited bulk checking</span>
+                                </li>
+                                <li class="flex">
+                                    <div class="mr-3 text-primary">
+                                        <i class="fas fa-check-circle"></i>
+                                    </div>
+                                    <span class="text-gray-300">Custom service requests</span>
+                                </li>
+                                <li class="flex">
+                                    <div class="mr-3 text-primary">
+                                        <i class="fas fa-check-circle"></i>
+                                    </div>
+                                    <span class="text-gray-300">Unlimited threads</span>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="p-6 bg-gray-800/40">
+                            <a href="#" class="w-full flex items-center justify-center py-2.5 border border-primary text-base font-medium rounded text-primary bg-transparent hover:bg-primary/10">
+                                Contact Sales
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- FAQ callout -->
+                <div class="mt-8 text-center">
+                    <p class="text-sm text-gray-400">
+                        Need a custom plan? <a href="#" class="text-primary hover:underline">Contact us</a> for special enterprise pricing.
+                    </p>
+                    <p class="text-xs text-gray-500 mt-2">
+                        All plans include a 3-day free trial. No credit card required. 
+                        <a href="#" class="text-primary hover:underline">Terms apply</a>.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faq" class="py-16 bg-gradient-to-b from-dark to-black">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="mb-12">
+                    <div class="inline-block mb-3">
+                        <div class="flex items-center">
+                            <i class="fas fa-question-circle text-primary mr-2"></i>
+                            <h2 class="text-3xl font-bold text-white">FAQ</h2>
+                        </div>
+                        <div class="h-1 w-12 bg-primary mt-2"></div>
+                    </div>
+                    <p class="text-lg text-gray-400">
+                        Got questions? We've got answers. If you don't see your question here, hit us up on Discord.
+                    </p>
+                </div>
+
+                <div class="space-y-6">
+                    <!-- FAQ Item 1 -->
+                    <div class="bg-gray-900/60 rounded-lg overflow-hidden border border-gray-800 transition hover:border-gray-700">
+                        <button class="flex justify-between items-center w-full p-4 text-left focus:outline-none">
+                            <span class="text-base font-medium text-white">How does Soline's checker actually work?</span>
+                            <i class="fas fa-plus text-primary text-sm transition-transform duration-200"></i>
+                        </button>
+                        <div class="bg-gray-800/30 text-sm text-gray-300 px-4 py-3 border-t border-gray-800">
+                            <p class="mb-2">
+                                Simple: you input email:password combinations, we try to log in to the services you selected using those credentials.
+                            </p>
+                            <p>
+                                For valid accounts, we fetch additional data like subscription tier, renewal date, and account status. All checking happens on our secure servers through proxied connections to prevent rate limits or IP bans.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 2 -->
+                    <div class="bg-gray-900/60 rounded-lg overflow-hidden border border-gray-800 transition hover:border-gray-700">
+                        <button class="flex justify-between items-center w-full p-4 text-left focus:outline-none">
+                            <span class="text-base font-medium text-white">Is this legit? Will I get in trouble?</span>
+                            <i class="fas fa-plus text-primary text-sm transition-transform duration-200"></i>
+                        </button>
+                        <div class="bg-gray-800/30 text-sm text-gray-300 px-4 py-3 border-t border-gray-800">
+                            <p class="mb-2">
+                                Soline is designed for legitimate use cases ONLY: checking accounts you own, testing credential security, verifying user access in your organization, etc.
+                            </p>
+                            <p>
+                                It's your responsibility to only check credentials you have permission to verify. Using this tool for unauthorized access violates our ToS and could be illegal depending on your location.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 3 -->
+                    <div class="bg-gray-900/60 rounded-lg overflow-hidden border border-gray-800 transition hover:border-gray-700">
+                        <button class="flex justify-between items-center w-full p-4 text-left focus:outline-none">
+                            <span class="text-base font-medium text-white">Can I access your checker through an API?</span>
+                            <i class="fas fa-plus text-primary text-sm transition-transform duration-200"></i>
+                        </button>
+                        <div class="bg-gray-800/30 text-sm text-gray-300 px-4 py-3 border-t border-gray-800">
+                            <p>
+                                Nope, our API isn't public anymore. We used to offer it, but too many people abused it for crappy projects. If you have a legitimate business need for API access, hit us up at <span class="text-primary">api@soline.dev</span> - but don't get your hopes up.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 4 -->
+                    <div class="bg-gray-900/60 rounded-lg overflow-hidden border border-gray-800 transition hover:border-gray-700">
+                        <button class="flex justify-between items-center w-full p-4 text-left focus:outline-none">
+                            <span class="text-base font-medium text-white">What services can I check accounts for?</span>
+                            <i class="fas fa-plus text-primary text-sm transition-transform duration-200"></i>
+                        </button>
+                        <div class="bg-gray-800/30 text-sm text-gray-300 px-4 py-3 border-t border-gray-800">
+                            <div class="mb-3">
+                                <p>We currently support these services across our various plans:</p>
+                            </div>
+                            <div class="grid grid-cols-2 sm:grid-cols-3 gap-1">
+                                <div class="flex items-center">
+                                    <i class="fas fa-check text-primary text-xs mr-2"></i>
+                                    <span>Netflix</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-check text-primary text-xs mr-2"></i>
+                                    <span>Spotify</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-check text-primary text-xs mr-2"></i>
+                                    <span>Disney+</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-check text-primary text-xs mr-2"></i>
+                                    <span>HBO Max</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-check text-primary text-xs mr-2"></i>
+                                    <span>Hulu</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-check text-primary text-xs mr-2"></i>
+                                    <span>Prime Video</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-check text-primary text-xs mr-2"></i>
+                                    <span>Paramount+</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-check text-primary text-xs mr-2"></i>
+                                    <span>Crunchyroll</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-check text-primary text-xs mr-2"></i>
+                                    <span>And 32+ more...</span>
+                                </div>
+                            </div>
+                            <p class="mt-3 text-xs">
+                                * Service availability varies by plan. See pricing for details.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 5 -->
+                    <div class="bg-gray-900/60 rounded-lg overflow-hidden border border-gray-800 transition hover:border-gray-700">
+                        <button class="flex justify-between items-center w-full p-4 text-left focus:outline-none">
+                            <span class="text-base font-medium text-white">Do you store the account credentials I check?</span>
+                            <i class="fas fa-plus text-primary text-sm transition-transform duration-200"></i>
+                        </button>
+                        <div class="bg-gray-800/30 text-sm text-gray-300 px-4 py-3 border-t border-gray-800">
+                            <p>
+                                Hell no. We don't log your credentials - we're not trying to get arrested. We temporarily process them in memory during validation, then they're gone. We do store basic stats (success/fail counts, service types, etc.) for analytics, but never your actual logins.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- New FAQ Item 6 -->
+                    <div class="bg-gray-900/60 rounded-lg overflow-hidden border border-gray-800 transition hover:border-gray-700">
+                        <button class="flex justify-between items-center w-full p-4 text-left focus:outline-none">
+                            <span class="text-base font-medium text-white">Can I get a refund if the checker doesn't work?</span>
+                            <i class="fas fa-plus text-primary text-sm transition-transform duration-200"></i>
+                        </button>
+                        <div class="bg-gray-800/30 text-sm text-gray-300 px-4 py-3 border-t border-gray-800">
+                            <p>
+                                Yes, we offer 7-day no-questions-asked refunds if you're not happy with the service. Just contact us through Discord with your order info. After 7 days, refunds are handled case-by-case, usually only for technical issues on our end.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-10 text-center">
+                    <p class="text-gray-400">
+                        Still have questions? Ask us on 
+                        <a href="#" class="text-primary hover:underline">Discord</a>
+                        or email us at 
+                        <a href="mailto:support@soline.dev" class="text-primary hover:underline">support@soline.dev</a>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="py-12 bg-black relative overflow-hidden">
+            <div class="absolute inset-0 opacity-20">
+                <div class="absolute inset-0 bg-gradient-to-r from-primary to-blue-500 mix-blend-multiply"></div>
+            </div>
+            
+            <!-- Decorative Elements -->
+            <div class="absolute bottom-0 left-0 w-40 h-40 bg-primary/10 rounded-full blur-3xl"></div>
+            <div class="absolute top-10 right-10 w-20 h-20 bg-primary/10 rounded-full blur-xl"></div>
+            
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+                <div class="p-8 md:p-10 bg-gray-900/80 backdrop-blur-sm border border-gray-800 rounded-lg">
+                    <div class="flex flex-col md:flex-row items-center justify-between">
+                        <div class="mb-6 md:mb-0">
+                            <h3 class="text-2xl font-bold text-white mb-1">Ready to start checking?</h3>
+                            <p class="text-gray-400 max-w-lg">
+                                Get started now with our 3-day free trial. No credit card needed.
+                            </p>
+                            
+                            <div class="mt-4 flex items-center space-x-3">
+                                <div class="flex -space-x-2">
+                                    <img class="w-8 h-8 rounded-full border-2 border-gray-900" src="https://randomuser.me/api/portraits/men/32.jpg" alt="User">
+                                    <img class="w-8 h-8 rounded-full border-2 border-gray-900" src="https://randomuser.me/api/portraits/women/44.jpg" alt="User">
+                                    <img class="w-8 h-8 rounded-full border-2 border-gray-900" src="https://randomuser.me/api/portraits/men/21.jpg" alt="User">
+                                </div>
+                                <span class="text-xs text-gray-500">Joined in the last 24h</span>
+                            </div>
+                        </div>
+                        
+                        <div class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-3">
+                            <a href="#" class="px-6 py-3 bg-primary hover:bg-primary/90 text-black text-center font-medium rounded">
+                                Create Free Account
+                            </a>
+                            <a href="#" class="px-6 py-3 border border-gray-700 hover:border-gray-600 text-white text-center font-medium rounded">
+                                View Demo
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6 pt-6 border-t border-gray-800 flex flex-col sm:flex-row justify-between">
+                        <div class="mb-4 sm:mb-0">
+                            <div class="flex items-center">
+                                <i class="fas fa-shield-alt text-primary mr-2"></i>
+                                <span class="text-gray-300 text-sm">Secure & Private</span>
+                            </div>
+                        </div>
+                        <div class="mb-4 sm:mb-0">
+                            <div class="flex items-center">
+                                <i class="fas fa-tag text-primary mr-2"></i>
+                                <span class="text-gray-300 text-sm">Cancel Anytime</span>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex items-center">
+                                <i class="far fa-credit-card text-primary mr-2"></i>
+                                <span class="text-gray-300 text-sm">No Card Required</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="bg-black">
+            <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-2 md:grid-cols-5 gap-8">
+                    <!-- Logo Column -->
+                    <div class="col-span-2 md:col-span-2">
+                        <div class="flex items-center">
+                            <span class="text-primary font-bold text-2xl">SOLINE</span>
+                            <span class="text-xs font-bold bg-primary/20 text-primary ml-2 px-1.5 py-0.5 rounded">BETA</span>
+                        </div>
+                        <p class="mt-4 text-gray-500 text-sm">
+                            Advanced account checker developed by verified nerds.
+                            Launched in 2025 from our mom's basement.
+                        </p>
+                        
+                        <!-- Social Links -->
+                        <div class="mt-6 flex space-x-4">
+                            <a href="#" class="text-gray-400 hover:text-primary">
+                                <i class="fab fa-discord text-lg"></i>
+                            </a>
+                            <a href="#" class="text-gray-400 hover:text-primary">
+                                <i class="fab fa-twitter text-lg"></i>
+                            </a>
+                            <a href="#" class="text-gray-400 hover:text-primary">
+                                <i class="fab fa-telegram text-lg"></i>
+                            </a>
+                            <a href="#" class="text-gray-400 hover:text-primary">
+                                <i class="fab fa-github text-lg"></i>
+                            </a>
+                        </div>
+                        
+                        <!-- Support Email -->
+                        <div class="mt-6 flex items-center">
+                            <i class="far fa-envelope text-primary mr-2"></i>
+                            <a href="mailto:support@soline.dev" class="text-gray-400 hover:text-primary text-sm">support@soline.dev</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Navigation -->
+                    <div class="col-span-1">
+                        <h3 class="text-sm font-semibold text-gray-400 tracking-wider uppercase">Product</h3>
+                        <ul class="mt-4 space-y-2">
+                            <li><a href="#" class="text-gray-500 hover:text-primary text-sm">Features</a></li>
+                            <li><a href="#" class="text-gray-500 hover:text-primary text-sm">Pricing</a></li>
+                            <li><a href="#" class="text-gray-500 hover:text-primary text-sm">Changelog</a></li>
+                            <li><a href="#" class="text-gray-500 hover:text-primary text-sm">Status</a></li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Support -->
+                    <div class="col-span-1">
+                        <h3 class="text-sm font-semibold text-gray-400 tracking-wider uppercase">Support</h3>
+                        <ul class="mt-4 space-y-2">
+                            <li><a href="#" class="text-gray-500 hover:text-primary text-sm">Docs</a></li>
+                            <li><a href="#" class="text-gray-500 hover:text-primary text-sm">Discord</a></li>
+                            <li><a href="#" class="text-gray-500 hover:text-primary text-sm">FAQ</a></li>
+                            <li><a href="#" class="text-gray-500 hover:text-primary text-sm">Contact</a></li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Legal -->
+                    <div class="col-span-1">
+                        <h3 class="text-sm font-semibold text-gray-400 tracking-wider uppercase">Legal</h3>
+                        <ul class="mt-4 space-y-2">
+                            <li><a href="#" class="text-gray-500 hover:text-primary text-sm">Terms</a></li>
+                            <li><a href="#" class="text-gray-500 hover:text-primary text-sm">Privacy</a></li>
+                            <li><a href="#" class="text-gray-500 hover:text-primary text-sm">Cookies</a></li>
+                            <li><a href="#" class="text-gray-500 hover:text-primary text-sm">Licenses</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Separator -->
+                <div class="mt-10 border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-xs text-gray-500">
+                        &copy; 2025 Soline. All rights reserved. Made with ☕ by devs who needed a better checker.
+                    </p>
+                    
+                    <div class="mt-4 md:mt-0 flex items-center">
+                        <img src="https://img.shields.io/badge/status-operational-brightgreen" alt="Status" class="h-5">
+                        <span class="mx-2 text-gray-600">|</span>
+                        <div class="text-xs text-gray-500">
+                            <span id="commit-hash" class="font-mono">v0.14.2-beta</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="scripts.js"></script>
+    <script>
+        // Questionable quality vanilla JS that a developer might actually write
+        document.addEventListener('DOMContentLoaded', function() {
+            // Simple toggle for FAQ items
+            var faqItems = document.querySelectorAll('#faq button');
+            faqItems.forEach(function(item) {
+                item.addEventListener('click', function() {
+                    var content = this.nextElementSibling;
+                    var icon = this.querySelector('i');
+                    
+                    if (content.style.maxHeight) {
+                        content.style.maxHeight = null;
+                        icon.classList.remove('transform', 'rotate-45');
+                    } else {
+                        content.style.maxHeight = content.scrollHeight + 'px';
+                        icon.classList.add('transform', 'rotate-45');
+                    }
+                });
+            });
+            
+            // Show first FAQ item by default
+            if (faqItems.length > 0) {
+                faqItems[0].click();
+            }
+            
+            // Add current year to copyright
+            var year = new Date().getFullYear();
+            var copyrightEl = document.querySelector('footer .text-gray-500');
+            if (copyrightEl) {
+                copyrightEl.innerHTML = copyrightEl.innerHTML.replace('2025', year);
+            }
+            
+            // Hacky dark mode toggle that doesn't quite work 
+            // TODO: Fix this later - JM
+            /*var darkModeToggle = document.getElementById('dark-mode-toggle');
+            if (darkModeToggle) {
+                darkModeToggle.addEventListener('click', function() {
+                    document.body.classList.toggle('light-mode');
+                });
+            }*/
+            
+            console.log('%cSoline Account Checker', 'color: #10B981; font-size: 24px; font-weight: bold');
+            console.log('%cWanna work with us? Email jobs@soline.dev', 'color: #64748B; font-size: 12px;');
+        });
+    </script>
+</body>
+</html> 

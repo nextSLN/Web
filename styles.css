@@ -1,0 +1,332 @@
+/* Soline Account Checker
+   Written by: Jake M.
+   Last updated: 2023-09-15
+   
+   TABLE OF CONTENTS:
+   1. Base Styles
+   2. Custom Components
+   3. Animations
+   4. Responsiveness
+   5. Dark/Light Mode
+   6. Utilities
+   
+   TODO: 
+   - Clean up unused classes
+   - Optimize animations for mobile
+   - Fix Firefox rendering bug
+*/
+
+/* ===== 1. BASE STYLES ===== */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  overflow-x: hidden; /* prevent horizontal scroll on animations */
+}
+
+/* Custom scrollbar - looks nice but breaks on some browsers lol */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0F172A;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #10B981;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #0E9F6E;
+}
+
+/* ===== 2. CUSTOM COMPONENTS ===== */
+
+/* Background glows - these look super cool */
+.bg-glow {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.15) 0%, rgba(16, 185, 129, 0) 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Matrix background for the main hero - to be implemented with JS later */
+#matrix-bg {
+  z-index: 0;
+  opacity: 0.05;
+}
+
+/* Text glow effect for primary elements */
+.text-glow {
+  text-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+}
+
+/* Hover animations */
+.hover-scale {
+  transition: transform 0.3s ease;
+}
+
+.hover-scale:hover {
+  transform: scale(1.05);
+}
+
+/* Gradient borders... honestly I'm not sure if this works right */
+.gradient-border {
+  position: relative;
+  border-radius: 0.5rem;
+}
+
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  top: -2px; right: -2px; bottom: -2px; left: -2px;
+  background: linear-gradient(to right, #10B981, #3B82F6);
+  border-radius: 0.5rem;
+  z-index: -1;
+}
+
+/* Custom button shine effect */
+.btn-shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-shine::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  bottom: -50%;
+  left: -50%;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0) 100%);
+  transform: rotateZ(60deg) translate(-5em, 7.5em);
+  animation: shine 6s infinite;
+  pointer-events: none;
+}
+
+/* ===== 3. ANIMATIONS ===== */
+
+@keyframes shine {
+  0% {
+    transform: rotateZ(60deg) translate(-5em, 7.5em);
+  }
+  100% {
+    transform: rotateZ(60deg) translate(5em, -7.5em);
+  }
+}
+
+/* Glitch text effect */
+.glitch-text {
+  position: relative;
+}
+
+.glitch-text::before,
+.glitch-text::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.glitch-text::before {
+  left: 2px;
+  text-shadow: -1px 0 #10B981;
+  clip: rect(0, 900px, 0, 0);
+  animation: glitch-anim-1 2s infinite linear alternate-reverse;
+}
+
+.glitch-text::after {
+  left: -2px;
+  text-shadow: -1px 0 #0E9F6E;
+  clip: rect(0, 900px, 0, 0);
+  animation: glitch-anim-2 2s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim-1 {
+  0% {
+    clip: rect(3px, 9999px, 60px, 0);
+  }
+  20% {
+    clip: rect(13px, 9999px, 100px, 0);
+  }
+  40% {
+    clip: rect(33px, 9999px, 20px, 0);
+  }
+  60% {
+    clip: rect(27px, 9999px, 76px, 0);
+  }
+  80% {
+    clip: rect(63px, 9999px, 95px, 0);
+  }
+  100% {
+    clip: rect(83px, 9999px, 30px, 0);
+  }
+}
+
+@keyframes glitch-anim-2 {
+  0% {
+    clip: rect(23px, 9999px, 36px, 0);
+  }
+  20% {
+    clip: rect(13px, 9999px, 56px, 0);
+  }
+  40% {
+    clip: rect(43px, 9999px, 30px, 0);
+  }
+  60% {
+    clip: rect(53px, 9999px, 16px, 0);
+  }
+  80% {
+    clip: rect(63px, 9999px, 56px, 0);
+  }
+  100% {
+    clip: rect(73px, 9999px, 96px, 0);
+  }
+}
+
+/* Floating animation - use sparingly, it can be distracting */
+.floating {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+/* Custom animations for feature cards */
+.feature-card {
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.feature-card:hover {
+  transform: translateY(-10px);
+}
+
+/* ===== 4. RESPONSIVENESS ===== */
+
+/* These are for specific breakpoints that tailwind doesn't handle well */
+@media (max-width: 640px) {
+  .hero-title {
+    font-size: 2.5rem;
+  }
+  
+  .cta-section {
+    padding: 3rem 1rem;
+  }
+  
+  /* Fix weird spacing on mobile FAQ */
+  #faq .mt-16 {
+    margin-top: 2rem;
+  }
+}
+
+/* Fix for weird iPad sizing */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .feature-card {
+    min-height: 320px;
+  }
+}
+
+/* ===== 5. DARK/LIGHT MODE ===== */
+/* FIXME: This is broken right now, need to reimplement */
+/*
+.light-mode {
+  --bg-color: #f8fafc;
+  --text-color: #1e293b;
+  --card-bg: #ffffff;
+}
+*/
+
+/* ===== 6. UTILITIES ===== */
+
+.gradient-text {
+  background-image: linear-gradient(to right, #10B981, #3B82F6);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/* Glass effect - looks cool but hurts performance */
+.glass {
+  background: rgba(15, 23, 42, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Mobile menu */
+.mobile-menu {
+  transform: translateX(-100%);
+  transition: transform 0.3s ease-in-out;
+}
+
+.mobile-menu.open {
+  transform: translateX(0);
+}
+
+/* Typing animation */
+.typing {
+  border-right: 2px solid #10B981;
+  white-space: nowrap;
+  overflow: hidden;
+  animation: typing 3.5s steps(30, end), blink-caret 0.75s step-end infinite;
+}
+
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: #10B981 }
+}
+
+/* Hide elements until they're in view */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.fade-in.animated {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Custom dropdown - we'll probably use this for the account selection */
+.custom-dropdown {
+  position: relative;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #1F2937;
+  min-width: 160px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  z-index: 1;
+  border-radius: 0.5rem;
+  border: 1px solid #374151;
+}
+
+.custom-dropdown:hover .dropdown-content {
+  display: block;
+} 
